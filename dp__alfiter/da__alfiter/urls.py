@@ -1,0 +1,13 @@
+from django.urls import path;
+from . import views;
+
+
+
+urlpatterns = [
+	path("bilboard_diaply/", views.bilboard_diaply),
+	path("get_content_plugin_by_uti/", views.get_content_plugin_by_uti),
+
+	path("get_all_screens_uti/", views.get_all_screens_uti),
+	path("get_screen_by_uti/", views.get_screen_by_uti),
+	path("get_screen_section_data_by_uti", views.get_screen_section_data_by_uti)
+	];
