@@ -16,6 +16,7 @@ class ContentPlugin(models.Model):
 
 	related_file = models.FileField(); #the html file related to
 
+	enforced_refresh_of_content_time = models.FloatField(default=-1); #its in seconds #use -1 for no refreshing
 
 
 	def __str__(self)->str:

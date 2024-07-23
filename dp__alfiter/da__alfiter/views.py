@@ -25,6 +25,14 @@ def form_json_response(data:Dict[str,Any]|List[Dict])->HttpResponse:
 	return res;
 
 
+def form_html_response(data:str)->HttpResponse:
+	return HttpResponse(data, content_type="text/html");
+
+
+def get_json_from_http_request(input:HttpResponse)->Dict[str,Any]:
+	print("++++++", input.content.decode());
+	return json.loads(input.content.decode());
+
 
 
 def get_content_plugin_by_uti(request:HttpRequest)->HttpResponse:
@@ -135,7 +143,11 @@ def get_screen_by_uti(request:HttpRequest)->HttpResponse:
 
 
 def get_screen_section_data_by_uti(request:HttpRequest)->HttpResponse:
-	pre_output:Dict[str,Any] = dict();
+	pre_output:Dict[str,Any] = {
+		"is_ok":False,
+		"error_msg":None,
+		"data":None,
+		};
 
 
 	given_uti:str|None = request.GET.get("uti");
@@ -154,5 +166,45 @@ def get_screen_section_data_by_uti(request:HttpRequest)->HttpResponse:
 	else:
 		pre_output["data"] = query_output[0].generate_dict();
 		pre_output["is_ok"] = True;
-		
+
 	return form_json_response(pre_output);	
+
+
+
+def render_screen_by_uti(request:HttpRequest)->HttpResponse:
+	
+	screen_query_response:Dict[str,Any] = get_json_from_http_request(get_screen_by_uti(request));
+	
+	if screen_query_response["is_ok"] == False:
+		return form_html_response(screen_query_response["error_msg"]);
+
+
+
+	data:Dict[str,Any] = screen_query_response["data"];
+
+	
+	output = f"""
+	{% load static %}
+
+	<head>
+		<title>
+			{data["title"]}
+		</title>
+
+		<link rel="stylesheet" href="{% static "css/alfiter_display_page_style.css" %}"
+		<script src="{% static "js/alfiter_section_maker.js" %}"
+	</head>
+	<html>
+		<body>
+			<div class="alfiter_sections_holder" id="alfiter_main_section_holder">
+				{% for section_data in data %}
+
+				{% endfor %}
+			</div>
+		</body>
+	<html>	
+
+	"""
+
+
+	return form_html_response(output);
