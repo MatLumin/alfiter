@@ -80,12 +80,10 @@ class ScreenSection
 		}
 
 
-	update()
+	async update()
 		{			
-		this.get_data_from_server_and_assign_to_self().then
-			(
-			this.render
-			);
+		await this.get_data_from_server_and_assign_to_self();
+		this.render_self();
 		}
 
 
@@ -154,7 +152,7 @@ class ScreenSection
 			
 		console.log(`creating the component`);	
 
-		let output = document.createElement("div");
+		let output = document.createElement("iframe");
 		console.log(`setting the element pointer`);			
 		this.element_pointer = output;		
 
@@ -209,7 +207,7 @@ class ScreenSection
 		}
 
 
-	render()
+	render_self()
 		{
 		console.log("calling render");
 		if (this.has_already_made_element() === false)
@@ -217,6 +215,7 @@ class ScreenSection
 			console.error("rendering failed, cause no pointer to element exists");
 			return 0;
 			}
+		
 
 		console.log("updating the style")
 		this.set_style(
