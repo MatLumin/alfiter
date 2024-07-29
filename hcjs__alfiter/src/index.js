@@ -1,6 +1,5 @@
+ss = require("./ScreenSection.js");
 
 
-import ScreenSection from "./ScreenSection.js";
 
-console.log(ScreenSection);
 

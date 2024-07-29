@@ -1,4 +1,4 @@
-ALL_SCRENN_SECTIONS = [];
+let ALL_SCREEN_SECTIONS = [];
 
 
 
@@ -11,8 +11,8 @@ function generate_px_string(value)
 
 
 class ScreenSection
-	{
-	consructor(x_pos, y_pos, width, height)
+ 	{
+	constructor(x_pos, y_pos, width, height,)
 		{
 
 		console.log(`
@@ -28,51 +28,63 @@ class ScreenSection
 		this.height = height;
 		this.element_pointer  = null;
 
-		ALL_SCRENN_SECTIONS.push(this);
+		ALL_SCREEN_SECTIONS.push(this);
 		}
 
 
-	make_html_component(overide_element_pointer)
+	set_style(x_pos, y_pos, height, width)
+		{
+		console.log("setting the style...")
+		if (this.has_already_made_element() === false)
+			{
+			console.error("style setting failed due to absence of element_pointer")
+			return 0;
+			}
+		
+		this.element_pointer.style.top = generate_px_string(y_pos);
+		this.element_pointer.style.left = generate_px_string(x_pos);
+		this.element_pointer.style.height = generate_px_string(height);
+		this.element_pointer.style.width = generate_px_string(width);
+
+		console.log("set the style with no error :)")
+		return 1;
+		}
+
+
+	make_html_component()
 		{
 		console.log("calling make_html_component");
-		console.log(`overide_element_pointer:${this.overide_element_pointer}`);
 
-
-		if (overide_element_pointer === undefined)
+		if (this.has_already_made_element() === true)
 			{
-			overide_element_pointer = false;
-			}
-
-		console.log(`post type check overide_element_pointer:${this.overide_element_pointer}`);			
-
-
-
-		if (this.has_already_made_element() === true & (~overide_element_pointer))
-			{
-			console.log("already created the element, cant create anymore");
+			console.error("already created the element, cant create anymore");
 			console.log(`component creation failed`);				
 			return 0;
 			}
-
-
+			
 		console.log(`creating the component`);	
 
 		let output = document.createElement("div");
+		console.log(`setting the element pointer`);			
+		this.element_pointer = output;		
 
-		console.log(`styling the component`);	
 
-		output.style.bottom = generate_px_string(this.y_pos); 
-		output.style.left = generate_px_string(this.x_pos);
+		this.set_style(
+			this.x_pos,
+			this.y_pos,
+			this.width,
+			this.height,
+			);
+
+
 		output.style.position = "absolute";
-		output.style.width = generate_px_string(this.width);
-		output.style.height = generate_px_string(this.height);
 		output.style.backgroundColor = "red";
 
 		output.innerText = ".";
 
-		console.log(`setting the element pointer`);	
 
-		this.element_pointer = output;
+
+
 
 		console.log(`component creation done ok`);	
 		return 1;
@@ -82,34 +94,27 @@ class ScreenSection
 	has_already_made_element()
 		{
 		console.log(`calling has_already_made_element`);
+		console.log(`element_pointer = ${this.element_pointer}`)
 		let output = this.element_pointer !== null;
-		console.log(`has_already_made_element = ${outputs}`);
+		console.log(`has_already_made_element = ${output}`);
 		return output;
 		}
 
 
 
-	make_and_add_to_body(overdie_element_pointer)
+	put_on_screen(document)
 		{
-		console.log(`calling make_and_add_to_body`);
-		
-
-		if (overide_element_pointer === undefined)
-			{
-			overide_element_pointer = false;
-			}
-
-
-
-		let status_of_component_making = this.make_html_component(overide_element_pointer);
+		console.log(`calling put_on_screen`);
+		console.log('creating the component')
+		let status_of_component_making = this.make_html_component();
 
 		if (status_of_component_making === 0)
 			{
-			console.log("html compnent was already created, aborting adding to body");
+			console.error("html compnent was already created, aborting adding to body");
 			return 0;
 			}
 
-
+		console.log(`has_already_made_element = ${this.has_already_made_element()}`);
 		document.body.appendChild(
 			this.element_pointer
 			);
@@ -126,16 +131,24 @@ class ScreenSection
 
 		if (this.has_already_made_element() === false)
 			{
-			console.log("updating failed, cause no pointer to element exists");
+			console.error("updating failed, cause no pointer to element exists");
 			return 0;
 			}
 
-		output.style.bottom = generate_px_string(this.y_pos); 
-		output.style.left = generate_px_string(this.x_pos);
-		output.style.width = generate_px_string(this.width);
-		output.style.height = generate_px_string(this.height);		
+		this.element_pointer.style.bottom = generate_px_string(this.y_pos); 
+		this.element_pointer.style.left = generate_px_string(this.x_pos);
+		this.element_pointer.style.width = generate_px_string(this.width);
+		this.element_pointer.style.height = generate_px_string(this.height);		
 		return 1;
 		}
 	}
 
 
+
+
+
+module.exports = 
+	{
+	ALL_SCREEN_SECTIONS,
+	ScreenSection
+	};
