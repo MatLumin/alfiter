@@ -7,28 +7,85 @@ function generate_px_string(value)
 	return `${value}px`;
 	}
 
-
-
+const URL__GET_CONTENT_PLUGIN_BY_UI = "http://127.0.0.1:8000/da__alfiter/get_content_plugin_by_uti/?uti=";
+const URL__GET_SCREEN_SECTION_BY_UTI = "http://127.0.0.1:8000/da__alfiter/get_screen_section_data_by_uti?uti=";
 
 class ScreenSection
  	{
-	constructor(x_pos, y_pos, width, height,)
+ 	//design rule, get everyting from the server
+	constructor(x_pos, y_pos, height, width, uti, content_uti)
 		{
 
-		console.log(`
-		'constructor' is called for Screen Section			
-			x_pos:${x_pos}
-			y_pos:${y_pos}
-			width:${width}
-			height:${height}		
-			`);
+		this.uti = uti;
+
+
 		this.x_pos = x_pos;
 		this.y_pos = y_pos;
 		this.width = width;  	
 		this.height = height;
+
+		this.content = "NONE";
+		this.content_uti = content_uti;
+
 		this.element_pointer  = null;
 
-		ALL_SCREEN_SECTIONS.push(this);
+		}
+
+
+	async get_data_from_server()
+		{
+		console.log("called get_data_from_server");
+		let url = URL__GET_SCREEN_SECTION_BY_UTI+this.uti;
+		console.log(`url = ${url}`)
+		let response = await fetch
+			(
+				url,
+				{
+				"headers":
+					{
+					//"Access-Control-Allow-Origin":"127.0.0.1",
+					}
+				
+				}
+			);
+
+		let response_json = await response.json();
+		console.log(`response json`);
+		console.log(response_json);		
+		return response_json;
+		}
+
+
+	async get_data_from_server_and_assign_to_self()
+		{
+		let response_json = await this.get_data_from_server();
+		let data = response_json["data"];
+		console.log("data:");
+		console.log(data);
+		let start_x = data["start_x"];
+		let start_y = data["start_y"];
+		let height = data["height"];
+		let width = data["width"];
+		let content_uti = data["content_plugin"]["uti"];
+		let content = data["content_plugin"]["related_file"]["content"];
+
+		this.x_pos = start_x;
+		this.y_pos = start_y;
+
+		this.height = height;
+		this.width = width;
+
+		this.content_uti = content_uti;
+		this.content = content;
+		}
+
+
+	update()
+		{			
+		this.get_data_from_server_and_assign_to_self().then
+			(
+			this.render
+			);
 		}
 
 
@@ -48,6 +105,39 @@ class ScreenSection
 
 		console.log("set the style with no error :)")
 		return 1;
+		}
+
+
+	set_content(content)
+		{
+		console.log("set_inner_html is called");
+		if (this.has_already_made_element() === false)
+			{
+			console.error("content setting failed due to absence of element_pointer");
+			return 0
+			}
+
+		this.element_pointer.innerHTML = content;
+		return 1;
+		}
+
+
+	get_needed_css_values()
+		{
+		console.log("calling the get_needed_css_values");
+		if (this.has_already_made_element() === false)
+			{
+			console.error("element_pointer is null so cant return any css values");
+			return null;
+			}
+
+		let output = {
+				"top":this.element_pointer.style.top,
+				"left":this.element_pointer.style.left,
+				"height":this.element_pointer.style.height,
+				"width":this.element_pointer.style.width,			
+				};
+		return output;
 		}
 
 
@@ -72,19 +162,14 @@ class ScreenSection
 		this.set_style(
 			this.x_pos,
 			this.y_pos,
-			this.width,
 			this.height,
+			this.width,
 			);
 
+		this.set_content(this.content);
 
 		output.style.position = "absolute";
 		output.style.backgroundColor = "red";
-
-		output.innerText = ".";
-
-
-
-
 
 		console.log(`component creation done ok`);	
 		return 1;
@@ -99,7 +184,6 @@ class ScreenSection
 		console.log(`has_already_made_element = ${output}`);
 		return output;
 		}
-
 
 
 	put_on_screen(document)
@@ -125,23 +209,39 @@ class ScreenSection
 		}
 
 
-	update()
+	render()
 		{
-		console.log("calling update");
-
+		console.log("calling render");
 		if (this.has_already_made_element() === false)
 			{
-			console.error("updating failed, cause no pointer to element exists");
+			console.error("rendering failed, cause no pointer to element exists");
 			return 0;
 			}
 
-		this.element_pointer.style.bottom = generate_px_string(this.y_pos); 
-		this.element_pointer.style.left = generate_px_string(this.x_pos);
-		this.element_pointer.style.width = generate_px_string(this.width);
-		this.element_pointer.style.height = generate_px_string(this.height);		
+		console.log("updating the style")
+		this.set_style(
+			this.x_pos,
+			this.y_pos,
+			this.height,
+			this.width
+			);
+
+
+		this.set_content(
+			this.content
+			);
+
+
 		return 1;
 		}
+
+
 	}
+
+
+
+
+
 
 
 
