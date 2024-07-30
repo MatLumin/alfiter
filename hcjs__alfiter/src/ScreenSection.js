@@ -24,7 +24,7 @@ class ScreenSection
 		this.width = width;  	
 		this.height = height;
 
-		this.content = "NONE";
+		this.content_url = "NONE";
 		this.content_uti = content_uti;
 
 		this.element_pointer  = null;
@@ -67,7 +67,7 @@ class ScreenSection
 		let height = data["height"];
 		let width = data["width"];
 		let content_uti = data["content_plugin"]["uti"];
-		let content = data["content_plugin"]["related_file"]["content"];
+		let content_url = "http://" + data["host"]+data["content_plugin"]["related_file"]["url"];
 
 		this.x_pos = start_x;
 		this.y_pos = start_y;
@@ -76,7 +76,7 @@ class ScreenSection
 		this.width = width;
 
 		this.content_uti = content_uti;
-		this.content = content;
+		this.content_url = content_url;
 		}
 
 
@@ -106,7 +106,7 @@ class ScreenSection
 		}
 
 
-	set_content(content)
+	set_content()
 		{
 		console.log("set_inner_html is called");
 		if (this.has_already_made_element() === false)
@@ -115,7 +115,7 @@ class ScreenSection
 			return 0
 			}
 
-		this.element_pointer.innerHTML = content;
+		this.element_pointer.src = this.content_url;
 		return 1;
 		}
 
@@ -164,10 +164,11 @@ class ScreenSection
 			this.width,
 			);
 
-		this.set_content(this.content);
+		this.set_content();
 
 		output.style.position = "absolute";
 		output.style.backgroundColor = "red";
+		output.style.borderStyle = "none";
 
 		console.log(`component creation done ok`);	
 		return 1;
@@ -226,9 +227,7 @@ class ScreenSection
 			);
 
 
-		this.set_content(
-			this.content
-			);
+		this.set_content();
 
 
 		return 1;
