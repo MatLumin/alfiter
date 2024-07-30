@@ -213,7 +213,7 @@ class ScreenSection
 		console.log("calling render");
 		if (this.has_already_made_element() === false)
 			{
-			console.error("rendering failed, cause no pointer to element exists");
+			console.error("rendering failed, cause no pointer to element exists; call 'put_on_screen' first");
 			return 0;
 			}
 		
