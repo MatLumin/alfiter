@@ -1,6 +1,7 @@
 <script>
 import ScreenSection from './lib/ScreenSection.svelte';
-import {currently_selected_sections} from "./stores.js"
+import {currently_selected_sections} from "./stores.js";
+import ScreenScetionsDiv from "./lib/ScreenScetionsDiv.svelte";
 
 let selected_screen_section = null;
 
@@ -80,18 +81,20 @@ currently_selected_sections.subscribe
 </script>
 
 
+<ScreenScetionsDiv >
+  <ScreenSection x_pos=0 y_pos=0 height=194 width=114 />
+  <ScreenSection x_pos=228 y_pos=-2 height=242 width=117 />
+  <ScreenSection x_pos=114 y_pos=-2 height=194 width=114 />
+  <ScreenSection x_pos=568 y_pos=370 height=369 width=115 />
+  <ScreenSection x_pos=791 y_pos=0 height=96 width=122 />
+  <ScreenSection x_pos=797 y_pos=90 height=135 width=229 />
+  <ScreenSection x_pos=1105 y_pos=-36 height=298 width=172 />
+  <ScreenSection x_pos=679 y_pos=0 height=172 width=116 />
+  <ScreenSection x_pos=454 y_pos=90 height=270 width=343 />
+  <ScreenSection x_pos=344 y_pos=0 height=342 width=113 />
+  <ScreenSection x_pos=455 y_pos=407 height=384 width=115 />
+  <ScreenSection x_pos=683 y_pos=359 height=430 width=114 />
+</ScreenScetionsDiv>
 
 
-<ScreenSection x_pos=0 y_pos=0 height=194 width=114 />
-<ScreenSection x_pos=228 y_pos=-2 height=242 width=117 />
-<ScreenSection x_pos=114 y_pos=-2 height=194 width=114 />
-<ScreenSection x_pos=568 y_pos=370 height=369 width=115 />
-<ScreenSection x_pos=791 y_pos=0 height=96 width=122 />
-<ScreenSection x_pos=797 y_pos=90 height=135 width=229 />
-<ScreenSection x_pos=1105 y_pos=-36 height=298 width=172 />
-<ScreenSection x_pos=679 y_pos=0 height=172 width=116 />
-<ScreenSection x_pos=454 y_pos=90 height=270 width=343 />
-<ScreenSection x_pos=344 y_pos=0 height=342 width=113 />
-<ScreenSection x_pos=455 y_pos=407 height=384 width=115 />
-<ScreenSection x_pos=683 y_pos=359 height=430 width=114 />
 

@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "da__alfiter.apps.DaAlfiterConfig",    
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -48,8 +49,16 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
 
 ]
+
+
+#CORS_ALLOWED_ORIGINS = [];
+CORS_ALLOW_ALL_ORIGINS = True;
+X_FRAME_OPTIONS = "";
 
 ROOT_URLCONF = 'dp__alfiter.urls'
 
@@ -133,5 +142,9 @@ MEDIA_ROOT = BASE_DIR / "media";
 
 
 
+
 #CUSTOMS
 CONTENT_PLUGINS_DIR_NAME = "content_plugins";
+
+
+

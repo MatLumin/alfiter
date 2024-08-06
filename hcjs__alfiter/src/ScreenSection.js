@@ -153,6 +153,7 @@ class ScreenSection
 		console.log(`creating the component`);	
 
 		let output = document.createElement("iframe");
+		output.style.overflow = "hidden";
 		console.log(`setting the element pointer`);			
 		this.element_pointer = output;		
 

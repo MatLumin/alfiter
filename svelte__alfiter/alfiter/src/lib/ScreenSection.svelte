@@ -114,7 +114,6 @@ function select_self()
 	get_section_div().classList.add("HighLight");
 	is_seclted=true;
 	console.log("got selected");
-	apply_dem_and_pos_vars_to_style();
 	}
 
 
@@ -124,7 +123,6 @@ function de_select_self()
 	get_section_div().classList.remove("HighLight");
 	is_seclted=false;
 	console.log("got de-sected");
-	apply_dem_and_pos_vars_to_style();
 	}
 
 
@@ -145,6 +143,7 @@ proxial_method_carrier["width_down"]=width_down;
 	
 function apply_dem_and_pos_vars_to_style()
 	{
+	console.log("applying deminion and position accodring to vars on style")
 	get_section_div().style.top = `${y_pos}px`;
 	get_section_div().style.left = `${x_pos}px`;
 	get_section_div().style.height = `${height}px`;

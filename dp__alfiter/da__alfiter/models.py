@@ -16,8 +16,6 @@ class ContentPlugin(models.Model):
 
 	related_file = models.FileField(); #the html file related to
 
-	enforced_refresh_of_content_time = models.FloatField(default=-1); #its in seconds #use -1 for no refreshing
-
 
 	def __str__(self)->str:
 		return f"ContentPlugin: uti:{self.uti}";
@@ -51,10 +49,19 @@ class ContentPlugin(models.Model):
 		output["title"] = self.title;
 		output["related_file"] = {
 			"name":self.related_file.name,
-			"path":self.related_file.path,
 			"url":self.related_file.url,
+			#"content": self.get_content(),		
 			};
+
 		return output;
+
+
+	def get_content(self):
+		with open(self.related_file.path, "r") as f1:
+			return f1.read();
+			f1.close();
+
+
 
 
 

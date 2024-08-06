@@ -1,5 +1,47 @@
+<style>
+
+*
+	{
+	font-family : monospace;
+	color:wheat;
+	background-color: black;
+	font-size: 12px;
+	}
+
+.content_plugin_div
+	{
+	height: 100%;
+	width: 100%;
+	overflow: hidden;
+	}
 
 
-<h1>
-	HELLO WORLD
-</h1>
+
+
+
+</style>
+
+
+<script>
+
+
+let x = 0;
+
+function f()
+	{
+	x += 1;
+	document.getElementById("counter_display").innerText = `${x}`;
+	}
+
+	
+</script>	
+
+
+<div class="content_plugin_div">
+		<h1> TESTING </h1>
+
+		<h2 id="counter_display"> 0</h2>
+
+		<button onclick="f()"> Click me</button>
+</div>
+

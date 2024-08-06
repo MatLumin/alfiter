@@ -1,0 +1,48 @@
+<style>
+
+*
+	{
+	font-family : monospace;
+
+	background-color: black;
+
+	}
+
+.content_plugin_div
+	{
+	height: 100%;
+	width: 100%;
+	}
+
+
+
+
+
+</style>
+
+
+
+
+<div class="content_plugin_div" id="content_plugin_div">
+		<p id="text">* RAINBOW *</p>
+</div>
+
+<script>
+
+function rand_255()
+	{
+	return Math.floor(Math.random() * 255);
+	}
+
+setInterval
+	(
+	function()
+		{
+		console.log(`rgb(${rand_255()},${rand_255()},${rand_255()})`);
+		let random_color = `rgb(${rand_255()}${rand_255()}${rand_255()})`;
+		document.getElementById("text").style.color = random_color;
+		},
+		100,
+	);
+	
+</script>	
