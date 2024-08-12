@@ -173,3 +173,26 @@ def get_screen_section_data_by_uti(request:HttpRequest)->HttpResponse:
 
 
 
+def get_iamge_colelction_by_uti(request):
+	pre_output = {
+		"is_ok":False,
+		"error_msg":None,
+		"data":None,
+		};
+
+	given_uti = request.GET.get("uti");
+	given_uti_is_missing = given_uti == None;
+	if (given_uti_is_missing == True):
+		pre_output["error_msg"] = "given uti is missing";
+		return form_json_response(pre_output);
+
+	query:QuerySet = models.ImageCollection.objects.filter(uti=given_uti);
+	no_image_collection_was_found = query.count() == 0;
+	if (no_image_collection_was_found == True):
+		pre_output["error_msg"] = f"no uti was found with given uti of {given_uti}" ;
+		return form_json_response(pre_output);
+
+	pre_output["data"] = query[0].generate_dict();
+	pre_output["is_ok"] = True;
+
+	return form_json_response(pre_output);

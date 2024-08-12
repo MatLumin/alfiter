@@ -1,0 +1,64 @@
+
+<style>
+
+
+body
+	{
+	height:100%;
+	width: 100%;
+	background-color: black;
+	margin: 0px;
+	padding: 0px;
+	}
+
+
+#image_holder 
+	{
+	height:100%;
+	width: 100%;		
+	object-fit: cover;
+	margin: 0px;
+	padding: 0px;	
+	}
+
+</style>
+
+
+<body>
+
+	<img id="image_holder" src="">
+
+</body>
+
+
+<script>
+let image_srcs = [];
+let last_index = 0;
+
+async function get_data()
+	{
+	let request =await fetch("http://127.0.0.1:8000/da__alfiter/get_iamge_colelction_by_uti?uti=test");
+	let json = await request.json();
+	console.log(request);
+	for (let image of json["data"]["images"])
+		{
+		let url = image["url"];
+		console.log(url);
+		image_srcs.push(url);
+		}
+	}
+
+
+get_data();
+let image_holder = document.getElementById("image_holder");
+setInterval
+	(
+	function()
+		{
+		image_holder.setAttribute("src", image_srcs[last_index]);
+		last_index += 1;
+		last_index = last_index % image_srcs.length;
+		}, 1 * 1000
+	);
+
+</script>

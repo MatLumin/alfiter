@@ -109,6 +109,10 @@ class ScreenSection(models.Model):
 			}
 
 
+	def __str__(self):
+		return f"<ScreenSection {self.uti}>";
+
+
 
 
 
@@ -130,6 +134,33 @@ class Screen(models.Model):
 			"sections":sections,
 			};
 
+
+
+class ImageOfCollection(models.Model):
+	image = models.ImageField();
+	title = models.CharField(max_length=128, default="no title");
+
+	def __str__(self):
+		return f"<ImageOfCollection {self.title} >";
+
+class ImageCollection(models.Model):
+	uti = models.CharField(max_length=64, unique=True);
+	images = models.ManyToManyField("ImageOfCollection");
+
+
+	def generate_dict(self):
+		output = dict();
+		output["uti"] = self.uti;
+		output["images"] = [];
+		for i1 in self.images.all():
+			output["images"].append({
+				"url":i1.image.url
+				});
+		return output;
+
+
+	def __str__(self):
+		return f"<ImageCollection {self.uti}>";
 
 
 

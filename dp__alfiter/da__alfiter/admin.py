@@ -6,9 +6,8 @@ from . import models
 admin.site.register(models.ContentPlugin);
 admin.site.register(models.ScreenSection);
 admin.site.register(models.Screen);
-
-
-
+admin.site.register(models.ImageOfCollection);
+admin.site.register(models.ImageCollection);
 
 
 

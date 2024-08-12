@@ -48,6 +48,7 @@ async function get_screen_secrions_data_for_screen(screen_uti)
 		a.content_url = host_origin + "/" + content_url;
 		a.put_on_screen(document);		
 		a.render_self();
+		a.element_pointer.setAttribute("screen_scetion_uti_set_externally", uti);
 		}
 	}
 
