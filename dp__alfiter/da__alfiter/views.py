@@ -6,6 +6,7 @@ import os;
 from typing import *;
 import json;
 from django.db.models.query import QuerySet;
+import os;
 
 CONTENT_PLUGINS_FOLDER_NAME = "content_plugin";
 
@@ -196,3 +197,18 @@ def get_iamge_colelction_by_uti(request):
 	pre_output["is_ok"] = True;
 
 	return form_json_response(pre_output);
+
+
+
+def return_file_content(path)->str:
+	with open(path) as f1:
+		return f1.read();
+
+
+def index(request):
+	html_file_content = return_file_content("./static/webpack/index.html");
+	return HttpResponse(html_file_content,content_type="text/html");
+
+def mainjs(request):
+	html_file_content = return_file_content("./static/webpack/main.js");
+	return HttpResponse(html_file_content,content_type="text/javascript ");
