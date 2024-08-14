@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-=h4-e$s7bn__*#5osn(=s*k5+q6wxp3m0e1b^2%r5#ujxsbddr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["matlumin.pythonanywhere.com"]
+ALLOWED_HOSTS = ["matlumin.pythonanywhere.com", "127.0.0.1"]
 
 
 # Application definition

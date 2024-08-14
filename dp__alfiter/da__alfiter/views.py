@@ -7,6 +7,7 @@ from typing import *;
 import json;
 from django.db.models.query import QuerySet;
 import os;
+from django.contrib.staticfiles import finders;
 
 CONTENT_PLUGINS_FOLDER_NAME = "content_plugin";
 
@@ -206,9 +207,11 @@ def return_file_content(path)->str:
 
 
 def index(request):
-	html_file_content = return_file_content("./static/webpack/index.html");
-	return HttpResponse(html_file_content,content_type="text/html");
+	path = settings.STATIC_ROOT / "webpack/index.html";
+	content = return_file_content(path);
+	return HttpResponse(content,content_type="text/html");
 
 def mainjs(request):
-	html_file_content = return_file_content("./static/webpack/main.js");
-	return HttpResponse(html_file_content,content_type="text/javascript ");
+	path = settings.STATIC_ROOT / "webpack/main.js";	
+	content = return_file_content(path);
+	return HttpResponse(content,content_type="text/javascript");
