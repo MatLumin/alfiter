@@ -1,0 +1,5 @@
+on fire fox 
+go to "about:config" by url bar
+then search this
+	security.mixed_content.block_active_content.
+and set it to false

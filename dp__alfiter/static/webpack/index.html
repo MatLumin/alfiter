@@ -21,9 +21,8 @@
 <script type="text/javascript">
 async function get_screen_secrions_data_for_screen(screen_uti)
 	{
-	let django_server_origin = window.location.origin
-	let django_app_path = window.location.pathname.split("/")[1];
-	let url = django_server_origin+"/"+django_app_path+"/get_screen_by_uti/?uti="+screen_uti;
+
+	let url = "get_screen_by_uti/?uti="+screen_uti;
 	let response = await fetch(url);
 	let json_response = await response.json();
 	let data = json_response["data"];
