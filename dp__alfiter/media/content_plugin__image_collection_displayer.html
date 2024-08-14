@@ -35,9 +35,16 @@ body
 let image_srcs = [];
 let last_index = 0;
 
+
+function get_href_of_django_app()
+	{
+	return document.location.href.split("/").slice(0,-1).join("/");
+	}
+
+
 async function get_data()
 	{
-	let request =await fetch("http://127.0.0.1:8000/da__alfiter/get_iamge_colelction_by_uti?uti=test");
+	let request =await fetch("../da__alfiter/get_iamge_colelction_by_uti?uti=test");
 	let json = await request.json();
 	console.log(request);
 	for (let image of json["data"]["images"])
@@ -51,14 +58,16 @@ async function get_data()
 
 get_data();
 let image_holder = document.getElementById("image_holder");
-setInterval
-	(
-	function()
-		{
-		image_holder.setAttribute("src", image_srcs[last_index]);
-		last_index += 1;
-		last_index = last_index % image_srcs.length;
-		}, 1 * 1000
-	);
+
+function setsrc()
+	{
+	console.log(`last image index ${last_index}`)
+	last_index = last_index % image_srcs.length;		
+	image_holder.setAttribute("src", image_srcs[last_index]);
+	last_index += 1;
+	}
+
+
+setInterval(setsrc, 1 * 5000);
 
 </script>
