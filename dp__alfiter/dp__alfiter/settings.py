@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-=h4-e$s7bn__*#5osn(=s*k5+q6wxp3m0e1b^2%r5#ujxsbddr
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["matlumin.pythonanywhere.com"]
 
 
 # Application definition
@@ -58,7 +58,7 @@ MIDDLEWARE = [
 
 #CORS_ALLOWED_ORIGINS = [];
 #CORS_ALLOW_ALL_ORIGINS = True;
-#X_FRAME_OPTIONS = "";
+X_FRAME_OPTIONS = "";
 
 ROOT_URLCONF = 'dp__alfiter.urls'
 
